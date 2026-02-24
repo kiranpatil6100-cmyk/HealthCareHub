@@ -41,10 +41,10 @@ public class PatientService {
                 .email(request.getEmail())
                 .address(request.getAddress())
                 .dateOfBirth(request.getDateOfBirth())
-                .governmentIdEncrypted(dataEncryptionService.encrypt(request.getGovernmentId()))
-                .medicalHistoryEncrypted(dataEncryptionService.encrypt(request.getMedicalHistory()))
-                .insuranceNumberEncrypted(dataEncryptionService.encrypt(request.getInsuranceNumber()))
-                .emergencyContactEncrypted(dataEncryptionService.encrypt(request.getEmergencyContact()))
+                .governmentId(dataEncryptionService.encrypt(request.getGovernmentId()))
+                .medicalHistory(dataEncryptionService.encrypt(request.getMedicalHistory()))
+                .insuranceNumber(dataEncryptionService.encrypt(request.getInsuranceNumber()))
+                .emergencyContact(dataEncryptionService.encrypt(request.getEmergencyContact()))
                 .build();
 
         Patient saved = patientRepository.save(patient);
@@ -68,10 +68,10 @@ public class PatientService {
                 .email(patient.getEmail())
                 .address(patient.getAddress())
                 .dateOfBirth(patient.getDateOfBirth())
-                .governmentId(dataEncryptionService.decrypt(patient.getGovernmentIdEncrypted()))
-                .medicalHistory(dataEncryptionService.decrypt(patient.getMedicalHistoryEncrypted()))
-                .insuranceNumber(dataEncryptionService.decrypt(patient.getInsuranceNumberEncrypted()))
-                .emergencyContact(dataEncryptionService.decrypt(patient.getEmergencyContactEncrypted()))
+                .governmentId(dataEncryptionService.decrypt(patient.getGovernmentId()))
+                .medicalHistory(dataEncryptionService.decrypt(patient.getMedicalHistory()))
+                .insuranceNumber(dataEncryptionService.decrypt(patient.getInsuranceNumber()))
+                .emergencyContact(dataEncryptionService.decrypt(patient.getEmergencyContact()))
                 .exportedAt(LocalDateTime.now().format(FORMATTER))
                 .build();
     }

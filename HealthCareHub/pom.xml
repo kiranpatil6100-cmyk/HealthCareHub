@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version>
+        <version>3.2.3</version> <!-- Or any other recent stable version -->
         <relativePath/>
     </parent>
-    <groupId>com.nimblix</groupId>
-    <artifactId>SchoolPEPProject</artifactId>
+    <groupId>nimblix.in</groupId>
+    <artifactId>HealthCareHub</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SchoolPEPProject</name>
-    <description>Demo project for Spring Boot</description>
+    <name>HealthCareHub</name>
+    <description>HealthCareHub project using Spring Boot</description>
     <url/>
     <licenses>
         <license/>
@@ -28,8 +28,8 @@
     </scm>
     <properties>
         <java.version>17</java.version>
-        <maven-compiler-plugin.artifactId>maven-compiler-plugin</maven-compiler-plugin.artifactId>
-        <spring-boot-maven-plugin.artifactId>spring-boot-maven-plugin</spring-boot-maven-plugin.artifactId>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <lombok.version>1.18.32</lombok.version>
     </properties>
     <dependencies>
         <dependency>
@@ -89,6 +89,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -102,19 +103,22 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>${maven-compiler-plugin.artifactId}</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
                 <configuration>
+                    <release>${maven.compiler.release}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>${spring-boot-maven-plugin.artifactId}</artifactId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
                         <exclude>
