@@ -2,7 +2,6 @@ package nimblix.in.HealthCareHub.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import nimblix.in.HealthCareHub.utility.HealthCareUtil;
 
 @Entity
 @Table(name = "doctors")
@@ -11,52 +10,32 @@ import nimblix.in.HealthCareHub.utility.HealthCareUtil;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Doctor {
+public class Doctor extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "experience_years")
     private Integer experienceYears;
 
+    @Column(name = "phone")
     private String phone;
 
-    @Column(unique = true)
-    private String emailId;
-
-    private String password;
-
+    @Column(name = "qualification")
     private String qualification;
 
-    // ✅ Doctor login account
+    // Login User (Doctor Account)
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    // ✅ Many Doctors → One Hospital
+    // Many Doctors → One Hospital
     @ManyToOne
-    @JoinColumn(name = "hospital_id", nullable = false)
+    @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    // ✅ Many Doctors → One Specialization
     @ManyToOne
-    @JoinColumn(name = "specialization_id", nullable = false)
+    @JoinColumn(name = "specialization_id")
     private Specialization specialization;
 
-    private String createdTime;
-    private String updatedTime;
-
-    @PrePersist
-    protected void onCreate(){
-        createdTime = HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
-        updatedTime = createdTime;
-    }
-
-    @PreUpdate
-    protected void onUpdate(){
-        updatedTime = HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
-    }
 }

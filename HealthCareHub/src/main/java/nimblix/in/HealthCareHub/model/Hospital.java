@@ -33,6 +33,13 @@ public class Hospital {
 
     private Integer totalBeds;
 
+    // One Hospital → Many Doctors
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
+    private List<Doctor> doctors;
+
+    // One Hospital → Many Patients
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
+    private List<Patient> patients;
 
     @Column(name = "created_time", updatable = false)
     private String createdTime;

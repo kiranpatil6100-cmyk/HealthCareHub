@@ -17,7 +17,8 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer rating;
+    private Integer rating; // 1 to 5
+
     private String comment;
 
     @ManyToOne
@@ -28,17 +29,24 @@ public class Review {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
+    @Column(name = "created_time")
     private String createdTime;
+
+    @Column(name = "updated_time")
     private String updatedTime;
+
 
     @PrePersist
     protected void onCreate(){
-        createdTime = HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
-        updatedTime = createdTime;
+        createdTime= HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
+        updatedTime= HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
+
     }
 
     @PreUpdate
     protected void onUpdate(){
-        updatedTime = HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
+        this.updatedTime= HealthCareUtil.changeCurrentTimeToLocalDateFromGmtToISTInString();
+
+
     }
 }

@@ -4,36 +4,37 @@ import lombok.RequiredArgsConstructor;
 import nimblix.in.HealthCareHub.dto.ApiMessageResponse;
 import nimblix.in.HealthCareHub.dto.AuthLoginRequest;
 import nimblix.in.HealthCareHub.dto.AuthLoginResponse;
-import nimblix.in.HealthCareHub.model.Role;
+import nimblix.in.HealthCareHub.dto.AuthRegisterRequest;
 import nimblix.in.HealthCareHub.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/nurse")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
-public class NurseController {
+public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthLoginRequest request) {
+    public ResponseEntity<AuthLoginResponse> login(@RequestBody AuthLoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiMessageResponse> register(@RequestBody AuthRegisterRequest request) {
         try {
-            AuthLoginResponse response = authService.loginByRole(request, Role.NURSE);
-            return ResponseEntity.ok(response);
+            String message = authService.register(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ApiMessageResponse(message));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiMessageResponse(e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ApiMessageResponse("Invalid email or password"));
         }
     }
 
     @PostMapping("/logout")
-    @PreAuthorize("hasRole('NURSE')")
     public ResponseEntity<ApiMessageResponse> logout(
             @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
         try {
