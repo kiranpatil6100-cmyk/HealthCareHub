@@ -16,7 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("/api/patient")
 @RequiredArgsConstructor
 public class PatientController {
 
@@ -53,7 +53,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/register")
     @PreAuthorize("hasAnyRole('DOCTOR','NURSE')")
     public ResponseEntity<?> createPatient(@RequestBody PatientCreateRequest request) {
         try {
@@ -67,7 +67,7 @@ public class PatientController {
 
     @GetMapping("/{patientId}/export")
     @PreAuthorize("hasAnyRole('DOCTOR','NURSE')")
-    public ResponseEntity<?> exportPatientData(@PathVariable Long patientId) {
+    public ResponseEntity<?> exportPatientData(@PathVariable("patientId") Long patientId) {
         try {
             PatientExportResponse response = patientService.exportPatientData(patientId);
             return ResponseEntity.ok(response);

@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/doctor/login",
                                 "/nurse/login",
-                                "/patients/login",
+                                "/api/patient/login",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
